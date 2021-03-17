@@ -1,10 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+import { Apollo } from 'apollo-angular'
+import gql from 'graphql-tag'
+import { Observable, of } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { Task, Response } from './app-interface'
+
+const GET_TASKS = gql`
+  query Tasks {
+    tasks {
+      uuid
+      title
+      description
+      user {
+        fullName
+        uuid
+      }
+    }
+  }
+`
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  title = 'hasura-tutorial';
+export class AppComponent implements OnInit {
+  title = 'hasura-tutorial'
+
+  tasks$?: Observable<Task[]>
+
+  constructor(private apollo: Apollo) {}
+
+  ngOnInit(): void {
+    this.tasks$ = this.apollo
+      .watchQuery<Response>({
+        query: GET_TASKS,
+      })
+      .valueChanges.pipe(map((result) => result.data.tasks))
+  }
 }
