@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Apollo } from 'apollo-angular'
+import { Apollo, QueryRef } from 'apollo-angular'
 import gql from 'graphql-tag'
 import { Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -25,17 +25,21 @@ const GET_TASKS = gql`
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'hasura-tutorial'
-
-  tasks$?: Observable<Task[]>
+  tasks$: Observable<Task[]>
+  queryRef: QueryRef<Response>
 
   constructor(private apollo: Apollo) {}
 
   ngOnInit(): void {
-    this.tasks$ = this.apollo
-      .watchQuery<Response>({
-        query: GET_TASKS,
-      })
-      .valueChanges.pipe(map((result) => result.data.tasks))
+    this.queryRef = this.apollo.watchQuery<Response>({
+      query: GET_TASKS,
+    })
+    this.tasks$ = this.queryRef.valueChanges.pipe(
+      map((result) => result.data.tasks)
+    )
+  }
+
+  refreshHandler() {
+    this.queryRef.refetch()
   }
 }

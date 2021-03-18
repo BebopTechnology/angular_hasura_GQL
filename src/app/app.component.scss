@@ -1,0 +1,14 @@
+.content,
+main {
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  margin: 1rem;
+}

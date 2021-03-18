@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { GraphQLModule } from './graphql.module'
 import { HttpClientModule } from '@angular/common/http'
 import { TaskModule } from './tasks/task.module'
+import { TaskFormModule } from './tasks/task-form/task-form.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { TaskModule } from './tasks/task.module'
     GraphQLModule,
     HttpClientModule,
     TaskModule,
+    TaskFormModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

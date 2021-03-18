@@ -3,6 +3,7 @@
 </ul> -->
 
 <main>
+  <app-task-form (refresh)="refreshHandler()"></app-task-form>
   <h1>Tasks:</h1>
   <section class="list">
     <div class="card" *ngFor="let task of tasks$ | async">

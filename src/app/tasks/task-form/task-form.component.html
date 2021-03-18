@@ -1,0 +1,14 @@
+<section>
+    <form [formGroup]="form">
+        <mat-form-field class="form-field">
+            <input matInput formControlName="title" type="text"
+                placeholder="Enter title">
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <textarea matInput formControlName="description"
+                placeholder="Enter Description..."></textarea>
+        </mat-form-field>
+        <button [disabled]="form.invalid" mat-stroked-button
+            (click)="onAddTask()">Submit</button>
+    </form>
+</section>
